@@ -40,7 +40,8 @@ namespace R5_D8
             Console.WriteLine("Registering Modules...");
             this.moduleList = new List<IModule>(new IModule[]
             {
-                new TestModule(theClient)
+                new TestModule(theClient),
+                new TrustedInvite(theClient)
             });
             Console.WriteLine("Done.");
         }

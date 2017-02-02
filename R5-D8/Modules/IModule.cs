@@ -9,7 +9,7 @@ namespace R5_D8.Modules
 {
     abstract class IModule
     {
-        private DiscordClient theClient;
+        protected DiscordClient theClient;
         public IModule(DiscordClient discordClient)
         {
             this.theClient = discordClient;
