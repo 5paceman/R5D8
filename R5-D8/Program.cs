@@ -1,4 +1,5 @@
 ﻿using Discord;
+using Discord.Audio;
 using Discord.Commands;
 using R5_D8.Modules;
 using System;
@@ -31,18 +32,29 @@ namespace R5_D8
         private void SetupModules()
         {
             Console.WriteLine("Adding Commands...");
+
             theClient.UsingCommands(x =>
             {
                 x.PrefixChar = '.';
                 x.HelpMode = HelpMode.Private;
             });
+
+            Console.WriteLine("Adding Audio...");
+
+            theClient.UsingAudio(x =>
+            {
+                x.Mode = AudioMode.Both;
+            });
+
             Console.WriteLine("Done.");
             Console.WriteLine("Registering Modules...");
+
             this.moduleList = new List<IModule>(new IModule[]
             {
-                new TestModule(theClient),
-                new TrustedInvite(theClient)
+                new TrustedInvite(theClient),
+                new MusicBot(theClient)
             });
+
             Console.WriteLine("Done.");
         }
     }
