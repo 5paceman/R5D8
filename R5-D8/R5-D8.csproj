@@ -81,10 +81,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="README.Designer.md" />
-    <None Include="README.md">
-      <SubType>Component</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="opus.dll">
