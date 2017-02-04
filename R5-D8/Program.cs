@@ -43,7 +43,7 @@ namespace R5_D8
 
             theClient.UsingAudio(x =>
             {
-                x.Mode = AudioMode.Both;
+                x.Mode = AudioMode.Outgoing;
             });
 
             Console.WriteLine("Done.");

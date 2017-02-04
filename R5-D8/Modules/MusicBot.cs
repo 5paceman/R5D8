@@ -46,9 +46,10 @@ namespace R5_D8.Modules
         {
             IEnumerable<VideoInfo> downloadUrls = DownloadUrlResolver.GetDownloadUrls(youtubeURL);
             VideoInfo targetVideoInfo = downloadUrls.First(info => info.VideoType == VideoType.Mp4 && info.Resolution == 720);
-
+            
             if (targetVideoInfo.RequiresDecryption)
                 DownloadUrlResolver.DecryptDownloadUrl(targetVideoInfo);
+            Console.WriteLine("Found download url {0}", targetVideoInfo.DownloadUrl);
 
             Process process = Process.Start(new ProcessStartInfo
             {
@@ -57,12 +58,13 @@ namespace R5_D8.Modules
                 UseShellExecute = false,
                 RedirectStandardOutput = true
             });
-
+            Console.WriteLine("Started ffmpeg");
             Thread.Sleep(2000);
 
             int blockSize = 3840;
             byte[] buffer = new byte[blockSize];
             int byteCount;
+
 
             while(!shouldStop)
             {
