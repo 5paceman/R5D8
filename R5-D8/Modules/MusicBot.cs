@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using YoutubeExtractor;
@@ -30,13 +29,14 @@ namespace R5_D8.Modules
         async Task PlayMusic(CommandEventArgs e)
         {
             Channel foundChannel = FindUserInVoiceChannel(e.User, e.Server);
-            if(foundChannel != null)
+            if (foundChannel != null)
             {
                 Console.WriteLine("Found user in {0}", foundChannel.Name);
                 audioClient = await theClient.GetService<AudioService>().Join(foundChannel);
                 await e.Channel.SendMessage("Playing...");
                 PlayYouTube(audioClient, e.Args[0]);
-            } else
+            }
+            else
             {
                 await e.Channel.SendMessage("Join a Voice Channel first.");
             }
@@ -46,7 +46,7 @@ namespace R5_D8.Modules
         {
             IEnumerable<VideoInfo> downloadUrls = DownloadUrlResolver.GetDownloadUrls(youtubeURL);
             VideoInfo targetVideoInfo = downloadUrls.First(info => info.VideoType == VideoType.Mp4 && info.Resolution == 720);
-            
+
             if (targetVideoInfo.RequiresDecryption)
                 DownloadUrlResolver.DecryptDownloadUrl(targetVideoInfo);
             Console.WriteLine("Found download url {0}", targetVideoInfo.DownloadUrl);
@@ -59,14 +59,14 @@ namespace R5_D8.Modules
                 RedirectStandardOutput = true
             });
             Console.WriteLine("Started ffmpeg");
-            Thread.Sleep(2000);
+            Thread.Sleep(5000);
 
             int blockSize = 3840;
             byte[] buffer = new byte[blockSize];
             int byteCount;
 
 
-            while(!shouldStop)
+            while (!shouldStop)
             {
                 byteCount = process.StandardOutput.BaseStream.Read(buffer, 0, blockSize);
 
@@ -83,7 +83,6 @@ namespace R5_D8.Modules
                 shouldStop = false;
                 audioClient.Disconnect();
             }
-
         }
 
         async Task StopMusic(CommandEventArgs e)
@@ -94,9 +93,9 @@ namespace R5_D8.Modules
 
         private Channel FindUserInVoiceChannel(User user, Server server)
         {
-            foreach(Channel channel in server.VoiceChannels)
+            foreach (Channel channel in server.VoiceChannels)
             {
-                foreach(User channelUser in channel.Users)
+                foreach (User channelUser in channel.Users)
                 {
                     if (channelUser.Id == user.Id)
                         return channel;
